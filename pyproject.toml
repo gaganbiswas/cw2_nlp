@@ -37,7 +37,7 @@ dependencies = [
     "jinja2==3.1.6",
     "joblib==1.5.2",
     "kiwisolver==1.4.9",
-    "lxml==5.0.0",
+    "lxml==6.0.2",
     "markdown==3.9",
     "markupsafe==3.0.2",
     "matplotlib==3.10.6",
