@@ -1,0 +1,87 @@
+_wandb:
+    value:
+        cli_version: 0.21.4
+        e:
+            xh7xj4l07xeliev2oqm8s9v9dlds49q5:
+                args:
+                    - --model-config=model_config.yaml
+                    - --train-config=train_config.yaml
+                    - --wandb-run-name=seq2seq-small
+                codePath: part1/train.py
+                codePathLocal: train.py
+                cpu_count: 4
+                cpu_count_logical: 8
+                cudaVersion: "12.8"
+                disk:
+                    /:
+                        total: "395184570368"
+                        used: "24625147904"
+                email: gaganbiswas.me1@gmail.com
+                executable: /home/zeus/miniconda3/envs/cloudspace/bin/python
+                git:
+                    commit: 2686f68bd79943944c93268d75bca8f42140209f
+                    remote: https://github.com/gaganbiswas/cw2_nlp.git
+                gpu: NVIDIA L4
+                gpu_count: 1
+                gpu_nvidia:
+                    - architecture: Ada
+                      cudaCores: 7424
+                      memoryTotal: "24152899584"
+                      name: NVIDIA L4
+                      uuid: GPU-2aee8f53-304b-c2b9-6ea8-eaa94bbd2733
+                host: cs-01k9f7cwgw1pb3qrbfjx23na4p
+                memory:
+                    total: "33652232192"
+                os: Linux-6.8.0-1007-gcp-x86_64-with-glibc2.39
+                program: /teamspace/studios/this_studio/cw2_nlp/part1/train.py
+                python: CPython 3.12.11
+                root: /teamspace/studios/this_studio/cw2_nlp/part1
+                startedAt: "2025-11-07T13:29:47.248139Z"
+                writerId: xh7xj4l07xeliev2oqm8s9v9dlds49q5
+        m: []
+        python_version: 3.12.11
+        t:
+            "1":
+                - 1
+                - 5
+                - 53
+            "2":
+                - 1
+                - 5
+                - 53
+            "3":
+                - 13
+                - 16
+                - 61
+            "4": 3.12.11
+            "5": 0.21.4
+            "12": 0.21.4
+            "13": linux-x86_64
+dev_batch_size:
+    value: 128
+dropout_rate:
+    value: 0.2
+embed_size:
+    value: 16
+hidden_size:
+    value: 16
+log_every:
+    value: 10
+lr:
+    value: 0.001
+lr_decay:
+    value: 0.5
+max_epoch:
+    value: 30
+max_num_trial:
+    value: 5
+patience:
+    value: 1
+seed:
+    value: 0
+train_batch_size:
+    value: 32
+uniform_init:
+    value: 0.1
+valid_niter:
+    value: 2000
