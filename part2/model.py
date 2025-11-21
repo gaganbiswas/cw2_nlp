@@ -107,39 +107,33 @@ class CausalSelfAttention(nn.Module):
     def forward(
         self, x: torch.Tensor, output_attentions: bool = False
     ) -> GPTAttentionOutput:
-        """Forward the masked self-attention layer.
-        
-        Args:
-            x (torch.Tensor): Input tensor of shape (B, T, C) where B is the batch size,
-                T is the sequence length, C is the embedding dimension.
-            output_attentions (bool, optional): Whether to return the attention scores. Defaults to False.
-        
-        Returns:
-            GPTAttentionOutput: A dataclass with the following fields:
-                output: Tensor of shape (B, T, C) where B is the batch size,
-                    T is the sequence length, C is the embedding dimension.
-                attentions: (optional) Tensor of shape (B, nh, T, T) where nh is the number of heads.
-        """
         B, T, C = x.size()
-        ### Your code here (~8-15 lines) ###
-        raise NotImplementedError("Implement the forward method in CausalSelfAttention in model.py")
-        # Step 1: Calculate query, key, values for all heads
-        # (B, nh, T, hs)
-      
-        # Step 2: Compute attention scores
-        # Self-attend: (B, nh, T, hs) x (B, nh, hs, T) -> (B, nh, T, T)
+        head_dim = C // self.n_head  # size per attention head
 
-        # Step 3: Masking out the future tokens (causal) and softmax
+        # Step 1: Project input embeddings to query, key, and value matrices
+        k = self.key(x).view(B, T, self.n_head, head_dim).transpose(1, 2)  # (B, nh, T, hs)
+        q = self.query(x).view(B, T, self.n_head, head_dim).transpose(1, 2)
+        v = self.value(x).view(B, T, self.n_head, head_dim).transpose(1, 2)
 
-        # Step 4: Compute the attention output
-        # (B, nh, T, T) x (B, nh, T, hs) -> (B, nh, T, hs)
+        # Step 2: Compute scaled dot-product attention scores
+        att = (q @ k.transpose(-2, -1)) / math.sqrt(head_dim)  # (B, nh, T, T)
 
-        # Step 5: re-assemble all head outputs side by side
-        # (B, T, nh, hs) -> (B, T, C)
+        # Step 3: Apply causal mask to block future positions
+        att = att.masked_fill(self.mask[:, :, :T, :T] == 0, float('-inf'))
 
-        # Step 6: output projection + dropout
-        ### End of your code ###
-        return GPTAttentionOutput(output=y, attentions=attention)
+        # Step 4: Softmax to normalize attention weights
+        att = F.softmax(att, dim=-1)
+        att = self.attn_drop(att)
+
+        # Step 5: Compute attention output
+        y = att @ v  # (B, nh, T, hs)
+
+        # Step 6: Concatenate heads and apply output projection
+        y = y.transpose(1, 2).contiguous().view(B, T, C)
+        y = self.resid_drop(self.proj(y))
+
+        # Return both output and attention weights (if requested)
+        return GPTAttentionOutput(output=y, attentions=att if output_attentions else None)
 
 
 class Block(nn.Module):
