@@ -1,0 +1,48 @@
+{
+  "os": "Linux-6.8.0-1007-gcp-x86_64-with-glibc2.39",
+  "python": "CPython 3.12.11",
+  "startedAt": "2025-11-24T18:26:05.713597Z",
+  "args": [
+    "--model-config",
+    "model_config_medium.yaml",
+    "--train-config",
+    "train_config.yaml",
+    "--wandb-run-name",
+    "transformer_medium"
+  ],
+  "program": "/teamspace/studios/this_studio/cw2_nlp/part2/train.py",
+  "codePath": "part2/train.py",
+  "codePathLocal": "train.py",
+  "git": {
+    "remote": "https://github.com/gaganbiswas/cw2_nlp.git",
+    "commit": "3d8534697232df13c5a8f1791ff92880db5d42ae"
+  },
+  "email": "wyap2327@gmail.com",
+  "root": "/teamspace/studios/this_studio/cw2_nlp/part2",
+  "host": "cs-01kavfgzkp6k19nz5p03fs11p8",
+  "executable": "/home/zeus/miniconda3/envs/cloudspace/bin/python",
+  "cpu_count": 4,
+  "cpu_count_logical": 8,
+  "gpu": "Tesla T4",
+  "gpu_count": 1,
+  "disk": {
+    "/": {
+      "total": "395184570368",
+      "used": "28043948032"
+    }
+  },
+  "memory": {
+    "total": "31538307072"
+  },
+  "gpu_nvidia": [
+    {
+      "name": "Tesla T4",
+      "memoryTotal": "16106127360",
+      "cudaCores": 2560,
+      "architecture": "Turing",
+      "uuid": "GPU-ab31be74-7fc9-ef02-22e1-13ac22f71bdb"
+    }
+  ],
+  "cudaVersion": "12.8",
+  "writerId": "lq1wf8rtpwua4d2c1qa3ywl8ictmd2tp"
+}
