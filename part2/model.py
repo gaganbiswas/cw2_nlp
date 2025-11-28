@@ -320,7 +320,7 @@ class GPT(nn.Module):
                 # raise NotImplementedError("Implement sampling in the generate method in model.py (MSc students only)")
                 # 1. If top_k is not None, crop the logits to only the top k options
                 if top_k is not None:
-                    values, indices = torch.topk(logits, top_k, dim=-1)
+                    _, indices = torch.topk(logits, top_k, dim=-1)
                     mask = torch.ones_like(logits, dtype=torch.bool)
                     mask.scatter_(-1, indices, False)
                     logits.masked_fill_(mask, float('-inf'))
@@ -331,14 +331,12 @@ class GPT(nn.Module):
                     sorted_probs, sorted_idx = probs.sort(dim=-1, descending=True)
                     c_p = torch.cumsum(sorted_probs, dim=-1)
 
+                    # Used ChatGPT 5.0 to select only the top-p options and mask the rest.
                     mask = c_p > top_p
                     mask[..., 1:] = mask[..., :-1].clone()
                     mask[..., 0] = False
 
-                    mask = torch.zeros_like(mask).scatter_(
-    -1, sorted_idx, mask
-)
-
+                    mask = torch.zeros_like(mask).scatter_(-1, sorted_idx, mask)
                     logits = logits.masked_fill(mask, float('-inf'))
 
                 # apply softmax to convert logits to (normalized) probabilities
